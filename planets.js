@@ -1,87 +1,113 @@
+document.addEventListener("DOMContentLoaded", function () {
+  loadAllPlanets(); // toutes les planètes au chargement de la page
+});
+
 const apiBase = "https://swapi.dev/api/planets/";
-let currentPage = 1; // Commence à la première page
+let allPlanets = []; // Stocke toutes les planètes pour le filtrage et l'affichage
 
-// Met à jour la liste des planètes et les boutons de navigation
-function updatePlanetList(page) {
-  fetch(`${apiBase}?page=${page}`)
-    .then(response => response.json())
-    .then(data => {
-      const planetListElement = document.getElementById("planet-list");
-      // Nettoie la liste des planètes précédentes
-      planetListElement.innerHTML = '';
-
-      // Crée les éléments de la liste pour les nouvelles planètes
-      data.results.forEach(planet => {
-        const listItem = document.createElement("li");
-        listItem.textContent = planet.name;
-        listItem.onclick = () => {
-          displayPlanetInfo(planet.name); 
-          highlightPlanet();
-        };
-        planetListElement.appendChild(listItem);
-      });
-
-      // Active/désactive les boutons de navigation
-      document.getElementById("prevPage").disabled = !data.previous;
-      document.getElementById("nextPage").disabled = !data.next;
+// Charge toutes les planètes
+function loadAllPlanets(url = apiBase) {
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      allPlanets = allPlanets.concat(data.results);
+      if (data.next) {
+        loadAllPlanets(data.next); // Charge la page suivante
+      } else {
+        console.log("Toutes les planètes ont été chargées.");
+        displayPlanets(allPlanets); // Affiche initialement toutes les planètes
+      }
     })
-    .catch(error => console.error("Erreur lors de la récupération des planètes: ", error));
+    .catch((error) =>
+      console.error("Erreur lors du chargement des planètes: ", error)
+    );
 }
 
-// Affiche le nom et les informations de la planète sélectionnée à droite
-function displayPlanetInfo(name) {
-  const planetNameElement = document.getElementById("selected-planet-name");
-  planetNameElement.textContent = name;
-  highlightPlanet(); // Appelle cette fonction chaque fois qu'une planète est sélectionnée
+// Affichage des planètes selon le filtre
+function displayPlanets(planets) {
+  const planetListElement = document.getElementById("planet-list");
+  planetListElement.innerHTML = ""; // Nettoie la liste des planètes précédentes
 
-  // Récupère les informations de la planète depuis l'API
-  fetch(`${apiBase}?search=${name}`)
-    .then(response => response.json())
-    .then(data => {
-      const planetInfo = data.results[0];
-      // Met à jour les informations affichées
-      document.getElementById("population-info").textContent = `Population : ${planetInfo.population}`;
-      document.getElementById("diameter-info").textContent = `Diamètre : ${planetInfo.diameter}`;
-      document.getElementById("gravity-info").textContent = `Gravité : ${planetInfo.gravity}`;
-      document.getElementById("climate-info").textContent = `Climat : ${planetInfo.climate}`;
-      document.getElementById("terrain-info").textContent = `Terrain : ${planetInfo.terrain}`;
-    })
-    .catch(error => console.error("Erreur lors de la récupération des informations de la planète: ", error));
+  planets.forEach((planet) => {
+    const listItem = document.createElement("li");
+    listItem.textContent = planet.name;
+    listItem.onclick = () => {
+      displayPlanetInfo(planet); // Mise à jour pour passer l'objet planète directement
+      highlightPlanet(); // Met en évidence la planète sélectionnée
+    };
+    planetListElement.appendChild(listItem);
+  });
+
+  // Mise à jour du nombre de résultats
+  document.getElementById(
+    "filter-result-count"
+  ).textContent = `Nombre de résultats : ${planets.length}`;
+}
+
+// Gestion du filtre par population
+document
+  .getElementById("population-filter")
+  .addEventListener("change", function () {
+    const filterValue = this.value;
+    filterPlanetsByPopulation(filterValue);
+  });
+
+function filterPlanetsByPopulation(value) {
+  let filteredPlanets = allPlanets.filter((planet) => {
+    const population = parseInt(planet.population, 10);
+    switch (value) {
+      case "1":
+        return population > 0 && population <= 100000;
+      case "2":
+        return population > 100000 && population <= 100000000;
+      case "3":
+        return population > 100000000;
+      default:
+        return true; // Aucun filtre sélectionné ou "Toutes les populations"
+    }
+  });
+
+  displayPlanets(filteredPlanets); // Affiche les planètes filtrées
+}
+
+// Affichage des informations détaillées d'une planète
+function displayPlanetInfo(planet) {
+  document.getElementById("selected-planet-name").textContent = planet.name;
+  document.getElementById(
+    "population-info"
+  ).textContent = `Population : ${planet.population}`;
+  document.getElementById(
+    "diameter-info"
+  ).textContent = `Diamètre : ${planet.diameter}`;
+  document.getElementById(
+    "gravity-info"
+  ).textContent = `Gravité : ${planet.gravity}`;
+  document.getElementById(
+    "climate-info"
+  ).textContent = `Climat : ${planet.climate}`;
+  document.getElementById(
+    "terrain-info"
+  ).textContent = `Terrain : ${planet.terrain}`;
 }
 
 // Ajoute un point lumineux sur la demi-sphère pour la planète sélectionnée
 function highlightPlanet() {
-    const halfSphereElement = document.getElementById('half-sphere');
-    // Supprime le point précédent s'il existe
-    const existingPoints = halfSphereElement.getElementsByClassName('highlight-point');
-    while(existingPoints.length > 0) {
-        existingPoints[0].parentNode.removeChild(existingPoints[0]);
-    }
-    // Crée un nouveau point pour la planète sélectionnée
-    const point = document.createElement('div');
-    point.className = 'highlight-point';
-    
-    // Positionne le point de manière aléatoire sur l'arc de la demi-sphère
-    const angle = Math.random() * Math.PI; 
-    const radius = halfSphereElement.offsetWidth / 2; 
-    const x = radius + (radius * Math.cos(angle)) - 5; 
-    const y = radius - (radius * Math.sin(angle)) - 5; 
-    
-    point.style.left = `${x}px`;
-    point.style.top = `${y}px`;
-    halfSphereElement.appendChild(point);
-}
-
-document.getElementById("prevPage").addEventListener("click", () => {
-  if (currentPage > 1) {
-    currentPage--;
-    updatePlanetList(currentPage);
+  const halfSphereElement = document.getElementById("half-sphere");
+  // Supprime le point précédent s'il existe
+  while (halfSphereElement.firstChild) {
+    halfSphereElement.removeChild(halfSphereElement.firstChild);
   }
-});
+  // Crée un nouveau point pour la planète sélectionnée
+  const point = document.createElement("div");
+  point.className = "highlight-point";
 
-document.getElementById("nextPage").addEventListener("click", () => {
-  currentPage++;
-  updatePlanetList(currentPage);
-});
+  // Positionne le point de manière aléatoire sur l'arc de la demi-sphère
+  const angle = Math.random() * Math.PI;
+  const radius = halfSphereElement.offsetWidth / 2;
+  const x = radius + radius * Math.cos(angle) - 5;
+  const y = radius - radius * Math.sin(angle) - 5;
 
-updatePlanetList(currentPage);
+  point.style.left = `${x}px`;
+  point.style.top = `${y}px`;
+  halfSphereElement.appendChild(point);
+}
