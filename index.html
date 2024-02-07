@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Star Wars API</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <nav class="navbar">
+      <img src="public/logotype.png" alt="Logo" class="navbar-logo" />
+      <div class="navbar-links">
+        <a href="#" class="nav-link">ACCUEIL</a>
+        <a href="#" class="nav-link">PROCHAINE MISSION</a>
+      </div>
+    </nav>
+    <div class="icon-bar">
+      <div class="icon-item">
+        <a href="/planetes">
+          <i class="fas fa-globe"></i>
+          <span>PLANÈTES</span>
+        </a>
+      </div>
+      <div class="icon-item">
+        <a href="/vehicules">
+          <i class="fas fa-rocket"></i>
+          <span>VÉHICULES</span>
+        </a>
+      </div>
+      <div class="icon-item">
+        <a href="/personnes">
+          <i class="fas fa-user-astronaut"></i>
+          <span>PERSONNES</span>
+        </a>
+      </div>
+    </div>
+    <div class="background">
+      <div class="red-square">
+        <h1 class="about-title">ABOUT THE UNIVERSE</h1>
+        <p class="about-subtext">
+          Bienvenue sur ABOUT THE UNIVERSE pour découvrir toutes nos découvertes
+          à propos du monde qui nous entoure !
+        </p>
+        <button class="discover-btn">DÉCOUVRIR</button>
+        <p class="star-wars-text">STAR WARS</p>
+      </div>
+      <div class="black-square">
+        <h2 class="data-title">LES CHIFFRES</h2>
+        <p class="data-subtext">
+          Nous nous efforçons à archiver toutes nos trouvailles pour vous
+          partager autant que possible !
+        </p>
+        <div class="data-display" id="data-display">Chargement...</div>
+      </div>
+      <img src="public/casque.png" alt="Casque Star Wars" class="helmet" />
+      <div class="arrow left-arrow" onclick="changeContent(-1)">←</div>
+      <div class="arrow right-arrow" onclick="changeContent(1)">→</div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
