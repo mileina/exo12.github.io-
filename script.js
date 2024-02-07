@@ -45,3 +45,4 @@ function changeContent(direction) {
 
 // Appel initial à fetchData pour afficher les données de la première catégorie
 fetchData(categories[currentIndex]);
+

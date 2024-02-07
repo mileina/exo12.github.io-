@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Planètes Star Wars</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <nav class="navbar">
+        <img src="public/logotype.png" alt="Logo" class="navbar-logo">
+        <div class="navbar-links">
+            <a href="index.html" class="nav-link">ACCUEIL</a>
+            <a href="#" class="nav-link">PROCHAINE MISSION</a>
+        </div>
+    </nav>
+    <div class="icon-bar">
+        <div class="icon-item">
+            <a href="planets.html">
+                <i class="fas fa-globe"></i>
+                <span>PLANÈTES</span>
+            </a>
+        </div>
+        <div class="icon-item">
+            <a href="/vehicules">
+                <i class="fas fa-rocket"></i>
+                <span>VÉHICULES</span>
+            </a>
+        </div>
+        <div class="icon-item">
+            <a href="/personnes">
+                <i class="fas fa-user-astronaut"></i>
+                <span>PERSONNES</span>
+            </a>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="planet-list-container">
+            <h2>Planètes de Star Wars</h2>
+            <ul id="planet-list" class="planet-list"></ul>
+            <div class="navigation">
+                <button id="prevPage">Page Précédente</button>
+                <button id="nextPage">Page Suivante</button>
+            </div>
+        </div>
+        <div class="planet-info">
+            <div class="info-item">
+                <i class="fas fa-users"></i>
+                <span id="population-info">Population :</span>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-ruler"></i>
+                <span id="diameter-info">Diamètre :</span>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-meteor"></i>
+                <span id="gravity-info">Gravité :</span>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-cloud"></i>
+                <span id="climate-info">Climat :</span>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-mountain"></i>
+                <span id="terrain-info">Terrain :</span>
+            </div>
+        </div>
+        
+        <div class="selected-planet-display">
+            <h1 id="selected-planet-name" class="planet-name"></h1>
+            <div id="half-sphere" class="half-sphere"></div>
+        </div>
+    </div>
+    <script src="planets.js"></script>
+</body>
+</html>
