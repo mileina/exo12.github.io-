@@ -104,6 +104,7 @@ html {
   justify-content: center;
   align-items: center;
   text-align: center;
+  padding: 20px;
 }
 
 .star-wars-text {
@@ -164,9 +165,33 @@ html {
 }
 
 .data-display {
-  color: $tertiary-color;
   font-size: 1em;
+  font-weight: bold;
+  margin-top: 40px;
   margin-left: 40px;
+  padding: 10px;
+  border: 2px solid black;
+  border-radius: 5px;
+  background-color: lighten($tertiary-color, 20%);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+    transform: scale(1.05);
+  }
+}
+
+@keyframes pulsate {
+  0% {
+    transform: translateY(-50%) scale(1);
+  }
+  50% {
+    transform: translateY(-50%) scale(1.1);
+  }
+  100% {
+    transform: translateY(-50%) scale(1);
+  }
 }
 
 .arrow,
@@ -188,6 +213,9 @@ html {
   justify-content: center;
   align-items: center;
   margin-top: 80px;
+  border: 2px solid #000;
+
+  animation: pulsate 2s infinite ease-in-out;
 
   &.left-arrow {
     left: calc(20%);
@@ -198,16 +226,18 @@ html {
   }
 }
 
+.planete-page {
+  background-color: rgba(0, 0, 0, 1);
+  background: url("public/etoile.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
 .main-content {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   padding: 180px;
-  background-color: rgba(0, 0, 0, 1);
-  background-image: url("public/etoile.jpg");
-  background-size: cover;
-  background-position: center;
-  color: #fff;
 }
 
 .planet-list-container {

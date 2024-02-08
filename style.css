@@ -94,6 +94,7 @@ html {
   justify-content: center;
   align-items: center;
   text-align: center;
+  padding: 20px;
 }
 
 .star-wars-text {
@@ -157,11 +158,33 @@ html {
 }
 
 .data-display {
-  color: white;
   font-size: 1em;
+  font-weight: bold;
+  margin-top: 40px;
   margin-left: 40px;
+  padding: 10px;
+  border: 2px solid black;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+.data-display:hover {
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
 }
 
+@keyframes pulsate {
+  0% {
+    transform: translateY(-50%) scale(1);
+  }
+  50% {
+    transform: translateY(-50%) scale(1.1);
+  }
+  100% {
+    transform: translateY(-50%) scale(1);
+  }
+}
 .arrow,
 .left-arrow,
 .right-arrow {
@@ -181,6 +204,8 @@ html {
   justify-content: center;
   align-items: center;
   margin-top: 80px;
+  border: 2px solid #000;
+  animation: pulsate 2s infinite ease-in-out;
 }
 .arrow.left-arrow,
 .left-arrow.left-arrow,
@@ -193,16 +218,18 @@ html {
   right: 20%;
 }
 
+.planete-page {
+  background-color: rgb(0, 0, 0);
+  background: url("public/etoile.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
 .main-content {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   padding: 180px;
-  background-color: rgb(0, 0, 0);
-  background-image: url("public/etoile.jpg");
-  background-size: cover;
-  background-position: center;
-  color: #FFF;
 }
 
 .planet-list-container {
@@ -211,11 +238,14 @@ html {
   color: #0f1921;
   padding: 30px;
   margin-right: 20px;
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 .planet-list {
-  list-style-type: none;
+  margin: 0;
   padding: 0;
+  list-style-type: none;
 }
 
 .planet-list li {
@@ -225,29 +255,6 @@ html {
 
 .planet-list li:hover {
   text-decoration: underline;
-}
-
-.navigation {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-}
-
-.navigation button {
-  background-color: #ebebed;
-  color: #000;
-  border: none;
-  padding: 10px 20px;
-  font-size: 1em;
-  cursor: pointer;
-  margin-bottom: 20px;
-  border-radius: 5px;
-  transition: background-color 0.3s, color 0.3s, transform 0.3s;
-}
-
-.navigation button:hover {
-  background-color: #000;
-  color: white;
 }
 
 .selected-planet-display {
